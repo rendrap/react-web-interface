@@ -10,7 +10,7 @@ class ListAppointments extends Component {
                     <div key= {item.aptId} className="pet-item col media py-3">
                       <div className="mr-3">
                         <button className="pet-delete btn btn-sm btn-danger"
-                        onClick={ () => this.props.deleteAppointments(item)} >
+                        onClick={ () => this.props.deleteAppointments(item.aptId)} >
                         <FaTimes /></button>
                       </div>
 
