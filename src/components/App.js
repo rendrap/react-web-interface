@@ -14,10 +14,23 @@ class App extends Component {
     super();
     this.state = {
       myAppointments: [],
+      formDisplay: false,
       lastIndex: 0
     };
     this.handleDeleteAppointments = this.handleDeleteAppointments.bind(this);
   }
+
+  toggleForm = () => {
+    this.setState (prevState => {
+      return {
+        formDisplay: !prevState.formDisplay
+      };
+    });
+  }
+
+  /* toggleForm func
+
+  */
 
   handleDeleteAppointments = apt => {
     let tempApts = this.state.myAppointments;
@@ -45,15 +58,16 @@ class App extends Component {
 
   render () {
 
-
-
     return (
       <main className="page bg-white" id="petratings">
         <div className="container">
           <div className="row">
             <div className="col-md-12 bg-white">
               <div className="container">
-                <AddAppointments />
+                <AddAppointments
+                  formDisplay={this.state.formDisplay}
+                  toggleForm={this.toggleForm}
+                />
                 <SearchAppointments />
                 <ListAppointments appointments={this.state.myAppointments}
                   deleteAppointments={this.handleDeleteAppointments} />
