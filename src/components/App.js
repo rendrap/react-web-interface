@@ -15,9 +15,13 @@ class App extends Component {
     this.state = {
       myAppointments: [],
       formDisplay: false,
-      lastIndex: 0
+      orderBy: 'petName',
+      orderDir: 'asc',
+      lastIndex: 0,
     };
     this.handleDeleteAppointments = this.handleDeleteAppointments.bind(this);
+    // this.toggleForm = this.toggleForm.bind(this);
+    this.addApointment = this.addApointment.bind(this);
   }
 
   toggleForm = () => {
@@ -28,8 +32,20 @@ class App extends Component {
     });
   }
 
-  /* toggleForm func
+  addApointment(apt) {
+    let tempApts = this.state.myAppointments;
+    apt.aptId = this.state.lastIndex;
+    tempApts.unshift(apt);
+    this.setState({
+      myAppointments: tempApts,
+      lastIndex: this.state.lastIndex + 1
+    })
+  }
 
+  /* toggleForm funcion
+  this.setState({
+    formDisplay: !this.state.formDisplay
+  });
   */
 
   handleDeleteAppointments = apt => {
@@ -58,6 +74,24 @@ class App extends Component {
 
   render () {
 
+    let order;
+    let filteredApts = this.state.myAppointments;
+    if(this.state.orderDir === 'asc') {
+      order = 1;
+    } else {
+      order = -1;
+    }
+
+    filteredApts.sort((a,b) => {
+      if  (a[this.state.orderBy].toLowerCase() <
+          b[this.state.orderBy].toLowerCase()
+        ) {
+        return -1 * order;
+      } else {
+        return 1 * order;
+      }
+    });
+
     return (
       <main className="page bg-white" id="petratings">
         <div className="container">
@@ -67,9 +101,10 @@ class App extends Component {
                 <AddAppointments
                   formDisplay={this.state.formDisplay}
                   toggleForm={this.toggleForm}
+                  addApointment={this.addApointment}
                 />
                 <SearchAppointments />
-                <ListAppointments appointments={this.state.myAppointments}
+                <ListAppointments appointments={filteredApts}
                   deleteAppointments={this.handleDeleteAppointments} />
               </div>
             </div>
