@@ -82,7 +82,6 @@ class App extends Component {
       order = -1;
     }
 
-
     filteredApts.sort((a,b) => {
       if  (a[this.state.orderBy].toLowerCase() <
           b[this.state.orderBy].toLowerCase()
